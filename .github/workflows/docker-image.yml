@@ -19,6 +19,7 @@ on:
     - master
     - default
     - develop
+  workflow_dispatch:
 
 jobs:
   push_to_registry:
