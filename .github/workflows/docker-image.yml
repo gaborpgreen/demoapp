@@ -70,7 +70,7 @@ jobs:
         uses: huggingface/helm-publish-action@1.1.0
         with:
           workingDirectory: helm
-          repository: ${{ env.REGISTRY }}
+          repository: https://${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           beforeHook: init_helm.sh ${{ steps.meta.outputs.labels['org.opencontainers.image.version'] }}
