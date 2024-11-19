@@ -67,14 +67,14 @@ jobs:
         push-to-registry: true
     
     - name: Init helm
-      run: chmod 700 ./init_helm.sh && ./init_helm.sh
+      run: chmod 700 ./init_helm.sh && ./init_helm.sh ${{ env.GITHUB_BASE_REF }}
 
     - name: Helm Publish Action
       uses: appany/helm-oci-chart-releaser@v0.4.2
       with:
         name: ${{ env.IMAGE_NAME}}
         repository: ${{ env.IMAGE_NAME}}
-        tag: ${{ steps.meta.outputs.labels['org.opencontainers.image.version'] }}
+        tag: ${{ env.GITHUB_BASE_REF}}
         path: helm
         registry: ${{ env.REGISTRY }}
         registry_username: ${{ github.actor }}
