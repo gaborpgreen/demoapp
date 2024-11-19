@@ -37,21 +37,18 @@ jobs:
     - name: Check out the repo
       uses: actions/checkout@v4.2.2
       with:
-        if: "!contains(env.GITHUB_BASE_REF, 'release-')"
         repository: ${{ env.GITHUB_REPOSITORY }}/-configs-dev
         path: 'helm-configs-dev'
         
     - name: Check out the repo
       uses: actions/checkout@v4.2.2
       with:
-        if: contains(env.GITHUB_BASE_REF, 'release-')
         repository: ${{ env.GITHUB_REPOSITORY }}/-configs-test
         path: 'helm-configs-test'
         
     - name: Check out the repo
       uses: actions/checkout@v4.2.2
       with:
-        if: contains(env.GITHUB_BASE_REF, 'release-')
         repository: ${{ env.GITHUB_REPOSITORY }}/-configs-prod
         path: 'helm-configs-prod'
 
