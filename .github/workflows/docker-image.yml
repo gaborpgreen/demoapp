@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: ${{ env.IMAGE_NAME}} CI
 
 env:
   REGISTRY: ghcr.io
@@ -65,3 +65,12 @@ jobs:
           subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}
           subject-digest: ${{ steps.push.outputs.digest }}
           push-to-registry: true
+
+      - name: Helm Publish Action
+        uses: huggingface/helm-publish-action@1.1.0
+        with:
+          workingDirectory: helm
+          repository: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          beforeHook: init_helm.sh ${{ steps.meta.outputs.labels['org.opencontainers.image.version'] }}
