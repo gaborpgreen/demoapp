@@ -30,10 +30,7 @@ jobs:
       contents: read
       attestations: write
       id-token: write
-    steps:
-    - name: Set environment
-      run: chmod 700 ./set_env.sh && ./set_env.sh ${{ env.GITHUB_BASE_REF }}
-    
+    steps: 
     - name: Check out the repo
       uses: actions/checkout@v4.2.2
       
