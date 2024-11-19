@@ -37,19 +37,19 @@ jobs:
     - name: Check out the repo
       uses: actions/checkout@v4.2.2
       with:
-        repository: ${{ env.GITHUB_REPOSITORY }}/-configs-dev
+        repository: ${{ env.GITHUB_REPOSITORY }}-configs-dev
         path: 'helm-configs-dev'
         
     - name: Check out the repo
       uses: actions/checkout@v4.2.2
       with:
-        repository: ${{ env.GITHUB_REPOSITORY }}/-configs-test
+        repository: ${{ env.GITHUB_REPOSITORY }}-configs-test
         path: 'helm-configs-test'
         
     - name: Check out the repo
       uses: actions/checkout@v4.2.2
       with:
-        repository: ${{ env.GITHUB_REPOSITORY }}/-configs-prod
+        repository: ${{ env.GITHUB_REPOSITORY }}-configs-prod
         path: 'helm-configs-prod'
 
     - name: Log in to Docker Hub
