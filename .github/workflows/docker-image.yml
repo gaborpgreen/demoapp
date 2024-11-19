@@ -1,4 +1,4 @@
-name: ${{ env.IMAGE_NAME}} CI
+name: Docker image CI
 
 env:
   REGISTRY: ghcr.io
