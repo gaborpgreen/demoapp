@@ -88,6 +88,7 @@ jobs:
   helm_chart:
     name: Push helm chart
     runs-on: ubuntu-latest
+    needs: [docker_image]
     steps:
     - run: chmod 700 init_helm.sh
     
