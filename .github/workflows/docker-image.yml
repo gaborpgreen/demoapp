@@ -34,24 +34,6 @@ jobs:
     steps: 
     - name: Check out the repo
       uses: actions/checkout@v4.2.2
-      
-    - name: Check out the repo
-      uses: actions/checkout@v4.2.2
-      with:
-        repository: ${{ github.repository }}-configs-dev
-        path: 'helm-configs-dev'
-        
-    - name: Check out the repo
-      uses: actions/checkout@v4.2.2
-      with:
-        repository: ${{ github.repository }}-configs-test
-        path: 'helm-configs-test'
-        
-    - name: Check out the repo
-      uses: actions/checkout@v4.2.2
-      with:
-        repository: ${{ github.repository }}-configs-prod
-        path: 'helm-configs-prod'
 
     - name: Log in to Docker Hub
       uses: docker/login-action@v3.3.0
@@ -89,6 +71,7 @@ jobs:
     name: Push helm chart
     runs-on: ubuntu-latest
     needs: [docker_image]
+    runs-on: ${{needs.docker_image.outputs.RUNNER}
     steps:
     - run: chmod 700 init_helm.sh
     
