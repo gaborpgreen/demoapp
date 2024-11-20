@@ -86,7 +86,7 @@ jobs:
         push-to-registry: true
 
   helm_chart:
-    - run: chmod 700 ./init_helm.sh
+    - run: chmod 700 init_helm.sh
     
     - run: ./init_helm.sh ${{ env.BRANCH_NAME }}
     
