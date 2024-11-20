@@ -3,23 +3,20 @@ name: Docker image CI
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-  BRANCH_NAME: ${{ github.head_ref || github.ref_name }} 
+  BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+  MAIN_BRANCH_NAMES:
+  - main
+  - master
+  - default
+  - develop
 
 on:
   push:
-    branches: 
-    - main
-    - master
-    - default
-    - develop
+    branches: ${{ env.MAIN_BRANCH_NAMES }}
     tags:
     - release-*
   pull_request:
-    branches: 
-    - main
-    - master
-    - default
-    - develop
+    branches: ${{ env.MAIN_BRANCH_NAMES }}
   workflow_dispatch:
 
 jobs:
@@ -87,7 +84,7 @@ jobs:
     
     - run: chmod 700 ./init_helm.sh
     
-    - run: ./init_helm.sh ${{ env.BRANCH_NAME }}
+    - run: ./init_helm.sh ${{ env.BRANCH_NAME }} ${{ env.MAIN_BRANCH_NAMES }}
       
     - name: Release Helm chart
       uses: flownative/action-helm-release@v2.0.1
@@ -97,7 +94,7 @@ jobs:
         chart_version: ${{ env.BRANCH_NAME }}
         app_version: ${{ env.BRANCH_NAME }}
         registry_host: ${{ env.REGISTRY }}
-        repository_path: /
+        repository_path: ./
         repository_user: ${{ github.actor }}
         repository_password: ${{ secrets.GITHUB_TOKEN }}
 
