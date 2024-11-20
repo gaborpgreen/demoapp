@@ -71,7 +71,6 @@ jobs:
     name: Push helm chart
     runs-on: ubuntu-latest
     needs: [docker_image]
-    runs-on: ${{ needs.docker_image.outputs.RUNNER }}
     steps:
     - run: chmod 700 init_helm.sh
     
@@ -85,6 +84,6 @@ jobs:
         chart_version: ${{ env.BRANCH_NAME }}
         app_version: ${{ env.BRANCH_NAME }}
         registry_host: ${{ env.REGISTRY }}
-        repository_path: ./
+        repository_path: 'my-charts'
         repository_user: ${{ github.actor }}
         repository_password: ${{ secrets.GITHUB_TOKEN }}
