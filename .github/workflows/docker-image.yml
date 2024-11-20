@@ -86,6 +86,9 @@ jobs:
         push-to-registry: true
 
   helm_chart:
+    name: Push helm chart
+    runs-on: ubuntu-latest
+    steps:
     - run: chmod 700 init_helm.sh
     
     - run: ./init_helm.sh ${{ env.BRANCH_NAME }}
