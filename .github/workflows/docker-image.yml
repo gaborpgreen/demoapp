@@ -88,7 +88,7 @@ jobs:
       run: chmod 700 ./init_helm.sh && ./init_helm.sh ${{ env.GITHUB_BASE_REF }}
       
     - name: Release Helm chart
-      uses: flownative/action-helm-release@v2
+      uses: flownative/action-helm-release@v2.0.1
       with:
         charts_folder: helm
         chart_name: ${{ env.IMAGE_NAME}}
