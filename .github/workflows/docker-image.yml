@@ -3,6 +3,7 @@ name: Docker image CI
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+  BRANCH_NAME: ${{ github.head_ref || github.ref_name }} 
 
 on:
   push:
@@ -86,7 +87,7 @@ jobs:
     
     - run: chmod 700 ./init_helm.sh
     
-    - run: ./init_helm.sh ${{ github.BASE_REF }}
+    - run: ./init_helm.sh ${{ env.BRANCH_NAME }}
       
     - name: Release Helm chart
       uses: flownative/action-helm-release@v2.0.1
