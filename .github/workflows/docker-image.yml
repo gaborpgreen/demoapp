@@ -88,16 +88,16 @@ jobs:
       run: chmod 700 ./init_helm.sh && ./init_helm.sh ${{ env.GITHUB_BASE_REF }}
       
     - name: Release Helm chart
-        uses: flownative/action-helm-release@v2
-        with:
-          charts_folder: helm
-          chart_name: ${{ env.IMAGE_NAME}}
-          chart_version: ${{ steps.latest_version.outputs.tag }}
-          app_version: ${{ steps.latest_version.outputs.tag }}
-          registry_host: ${{ env.REGISTRY }}
-          repository_path: charts
-          repository_user: ${{ github.actor }}
-          repository_password: ${{ secrets.GITHUB_TOKEN }}
+      uses: flownative/action-helm-release@v2
+      with:
+        charts_folder: helm
+        chart_name: ${{ env.IMAGE_NAME}}
+        chart_version: ${{ steps.latest_version.outputs.tag }}
+        app_version: ${{ steps.latest_version.outputs.tag }}
+        registry_host: ${{ env.REGISTRY }}
+        repository_path: charts
+        repository_user: ${{ github.actor }}
+        repository_password: ${{ secrets.GITHUB_TOKEN }}
 
 #    - name: Helm Publish Action
 #      uses: appany/helm-oci-chart-releaser@v0.4.2
