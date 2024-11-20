@@ -71,7 +71,7 @@ jobs:
     name: Push helm chart
     runs-on: ubuntu-latest
     needs: [docker_image]
-    if: ${{ ! startsWith(env.BRANCH_NAME, 'release-') }}
+    if: ${{ ! startsWith(${{env.BRANCH_NAME}}, 'release-') }}
     permissions:
       packages: write
       contents: read
