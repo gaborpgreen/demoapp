@@ -4,23 +4,26 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
   BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
-  MAIN_BRANCH_NAMES:
-  - main
-  - master
-  - default
-  - develop
 
 on:
   push:
-    branches: ${{ env.MAIN_BRANCH_NAMES }}
+    branches:
+    - main
+    - master
+    - default
+    - develop
     tags:
     - release-*
   pull_request:
-    branches: ${{ env.MAIN_BRANCH_NAMES }}
+    branches:
+    - main
+    - master
+    - default
+    - develop
   workflow_dispatch:
 
 jobs:
-  push_to_registry:
+  docker_image:
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
     permissions:
@@ -81,11 +84,12 @@ jobs:
         subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}
         subject-digest: ${{ steps.push.outputs.digest }}
         push-to-registry: true
-    
+
+  helm_chart:
     - run: chmod 700 ./init_helm.sh
     
-    - run: ./init_helm.sh ${{ env.BRANCH_NAME }} ${{ env.MAIN_BRANCH_NAMES }}
-      
+    - run: ./init_helm.sh ${{ env.BRANCH_NAME }}
+    
     - name: Release Helm chart
       uses: flownative/action-helm-release@v2.0.1
       with:
@@ -97,15 +101,3 @@ jobs:
         repository_path: ./
         repository_user: ${{ github.actor }}
         repository_password: ${{ secrets.GITHUB_TOKEN }}
-
-#    - name: Helm Publish Action
-#      uses: appany/helm-oci-chart-releaser@v0.4.2
-#      with:
-#        name: ${{ env.IMAGE_NAME}}
-#        repository: ${{ github.repository }}
-#        tag: ${{ env.GITHUB_BASE_REF }}
-#        path: helm
-#        registry: ${{ env.REGISTRY }}
-#        registry_username: ${{ github.actor }}
-#        registry_password: ${{ secrets.GITHUB_TOKEN }}
-#        update_dependencies: 'false'
