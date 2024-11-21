@@ -91,7 +91,7 @@ jobs:
         chart_name: ${{ env.IMAGE_NAME }}
         chart_version: ${{ github.ref_name }}
         app_version: ${{ github.ref_name }}
-        registry_host: ${{ env.REGISTRY }}
-        repository_path: ""
+        registry_host: oci://${{ env.REGISTRY }}
+        repository_path: gaborpgreen
         repository_user: ${{ github.actor }}
         repository_password: ${{ secrets.GITHUB_TOKEN }}
