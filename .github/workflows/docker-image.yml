@@ -87,7 +87,7 @@ jobs:
     - run: helm package helm
     - run: echo ${{ secrets.GITHUB_TOKEN }} | helm registry login ${{ env.REGISTRY }}/${{ github.ACTOR }} --username ${{ github.ACTOR }} --password-stdin
     - run: ls
-    - run: helm push ./${{ REPO_SPLITED[1] }}-v0.0.1.tgz oci://${{ env.REGISTRY }}/${{ github.GITHUB_ACTOR_ID }}
+    - run: helm push ./$REPO_SPLITED[1]-v0.0.1.tgz oci://${{ env.REGISTRY }}/${{ github.GITHUB_ACTOR_ID }}
 
 #    
 #    - name: Release Helm chart
