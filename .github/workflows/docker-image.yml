@@ -81,7 +81,6 @@ jobs:
       
 #    - run: sed -i 's/\[app-version\]/'"${{ github.REF_NAME }}"'/g' helm/Chart.yaml
     - run: IFS="/"
-    - run
     - run: read -ra REPO_SPLITED <<< "${{ github.REPOSITORY }}"
     - run: sed -i 's/\[app-name\]/'"$REPO_SPLITED[1]"'/g' helm/Chart.yaml
     - run: sed -i 's/\[app-version\]/v0.0.1/g' helm/Chart.yaml
