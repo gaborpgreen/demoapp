@@ -80,7 +80,7 @@ jobs:
     - name: Check out the repo
       uses: actions/checkout@v4.2.2
       
-    - run: chmod 700 init_helm.sh
+    - run: chmod 700 helm.sh
     
     - run: ./helm.sh
 #    
