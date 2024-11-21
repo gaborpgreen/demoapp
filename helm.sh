@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
+echo 1
 echo $github_ref_name
-
+echo 2
+echo $github.ref_name
 #sed -i 's/\[app-version\]/'"${{ github.ref_name }}"'/g' helm/Chart.yaml
 
 #helm package helm
