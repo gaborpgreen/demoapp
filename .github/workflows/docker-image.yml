@@ -82,16 +82,16 @@ jobs:
       
     - run: chmod 700 init_helm.sh
     
-    - run: ./init_helm.sh ${{ github.ref_name }}
-    
-    - name: Release Helm chart
-      uses: flownative/action-helm-release@v2.0.1
-      with:
-        charts_folder: helm
-        chart_name: ${{ env.IMAGE_NAME }}
-        chart_version: ${{ github.ref_name }}
-        app_version: ${{ github.ref_name }}
-        registry_host: oci://${{ env.REGISTRY }}
-        repository_path: gaborpgreen
-        repository_user: ${{ github.actor }}
-        repository_password: ${{ secrets.GITHUB_TOKEN }}
+    - run: ./helm.sh
+#    
+#    - name: Release Helm chart
+#      uses: flownative/action-helm-release@v2.0.1
+#      with:
+#        charts_folder: helm
+#        chart_name: ${{ env.IMAGE_NAME }}
+#        chart_version: ${{ github.ref_name }}
+#        app_version: ${{ github.ref_name }}
+#        registry_host: oci://${{ env.REGISTRY }}
+#        repository_path: gaborpgreen
+#        repository_user: ${{ github.actor }}
+#        repository_password: ${{ secrets.GITHUB_TOKEN }}
