@@ -79,7 +79,8 @@ jobs:
     - name: Check out the repo
       uses: actions/checkout@v4.2.2
       
-    - run: sed -i 's/\[app-version\]/'"${{ github.REF_NAME }}"'/g' helm/Chart.yaml
+#    - run: sed -i 's/\[app-version\]/'"${{ github.REF_NAME }}"'/g' helm/Chart.yaml
+    - run: sed -i 's/\[app-version\]/v0.0.1/g' helm/Chart.yaml
     - run: helm package helm
     - run: echo ${{ secrets.GITHUB_TOKEN }} | helm registry login ${{ env.REGISTRY }}/${{ github.GITHUB_ACTOR_ID }} --username ${{ github.GITHUB_ACTOR_ID }} --password-stdin
     - run: ls
