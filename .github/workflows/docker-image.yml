@@ -82,12 +82,13 @@ jobs:
 #    - run: sed -i 's/\[app-version\]/'"${{ github.REF_NAME }}"'/g' helm/Chart.yaml
     - run: IFS="/"
     - run: read -ra REPO_SPLITED <<< "${{ github.REPOSITORY }}"
+    - run: APP_NAME="${REPO_SPLITED[1]}"
     - run: sed -i 's/\[app-name\]/'"$REPO_SPLITED[1]"'/g' helm/Chart.yaml
     - run: sed -i 's/\[app-version\]/v0.0.1/g' helm/Chart.yaml
     - run: helm package helm
     - run: echo ${{ secrets.GITHUB_TOKEN }} | helm registry login ${{ env.REGISTRY }}/${{ github.ACTOR }} --username ${{ github.ACTOR }} --password-stdin
     - run: ls
-    - run: helm push ./"${REPO_SPLITED[1]}"-v0.0.1.tgz oci://${{ env.REGISTRY }}/${{ github.ACTOR }}
+    - run: helm push ./${{ APP_NAME }}-v0.0.1.tgz oci://${{ env.REGISTRY }}/${{ github.ACTOR }}
 
 #    
 #    - name: Release Helm chart
