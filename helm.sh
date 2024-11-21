@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 
-echo 1
-echo $env.REGISTRY
-echo 2
-echo $REGISTRY
+echo $github_ref_name
 
 #sed -i 's/\[app-version\]/'"${{ github.ref_name }}"'/g' helm/Chart.yaml
 
