@@ -80,11 +80,13 @@ jobs:
       uses: actions/checkout@v4.2.2
       
 #    - run: sed -i 's/\[app-version\]/'"${{ github.REF_NAME }}"'/g' helm/Chart.yaml
+    - run: REPO_SPLITED=(${GITHUB_REPOSITORY//;/ })
+    - run: sed -i 's/\[app-name\]/${{ REPO_SPLITED[1] }}/g' helm/Chart.yaml
     - run: sed -i 's/\[app-version\]/v0.0.1/g' helm/Chart.yaml
     - run: helm package helm
     - run: echo ${{ secrets.GITHUB_TOKEN }} | helm registry login ${{ env.REGISTRY }}/${{ github.ACTOR }} --username ${{ github.ACTOR }} --password-stdin
     - run: ls
-#    - run: helm push ./istio-httpbin2-0.1.0.tgz oci://${{ env.REGISTRY }}/${{ github.GITHUB_ACTOR_ID }}
+    - run: helm push ./${{ REPO_SPLITED[1] }}-v0.0.1.tgz oci://${{ env.REGISTRY }}/${{ github.GITHUB_ACTOR_ID }}
 
 #    
 #    - name: Release Helm chart
