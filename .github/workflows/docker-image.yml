@@ -80,8 +80,8 @@ jobs:
       uses: actions/checkout@v4.2.2
       
 #    - run: sed -i 's/\[app-version\]/'"${{ github.REF_NAME }}"'/g' helm/Chart.yaml
-    - run: echo "${{ github.REPOSITORY }}"
-    - run: APP_NAME="$(cut -d'/' -f2 <<<'${{ github.REPOSITORY }}')"
+    - run: echo "${{ github.repository }}"
+    - run: APP_NAME="$(cut -d'/' -f2 <<<${{ github.repository }})"
     - run: echo "$APP_NAME"
     - run: sed -i "s/\[app-name\]/$APP_NAME/g" helm/Chart.yaml
     - run: sed -i 's/\[app-version\]/v0.0.1/g' helm/Chart.yaml
