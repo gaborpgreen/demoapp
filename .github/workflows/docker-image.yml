@@ -92,4 +92,4 @@ jobs:
     - run: helm package helm --version $APP_VERSION
     - run: echo ${{ secrets.GITHUB_TOKEN }} | helm registry login ${{ env.REGISTRY }}/${{ github.ACTOR }} --username ${{ github.ACTOR }} --password-stdin
     - run: ls
-    - run: helm push ./"$APP_NAME"-v0.0.1.tgz oci://${{ env.REGISTRY }}/${{ github.ACTOR }}
+    - run: helm push ./"$APP_NAME"-v0.0.1.tgz oci://${{ env.REGISTRY }}/${{ github.ACTOR }}/helm
