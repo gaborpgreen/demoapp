@@ -69,7 +69,7 @@ jobs:
     name: Push helm chart
     runs-on: ubuntu-latest
     needs: [docker_image]
-    if: ${{ ! startsWith(github.ref_name, 'release-') }}
+#    if: ${{ ! startsWith(github.ref_name, 'release-') }}
     permissions:
       packages: write
       contents: read
@@ -81,7 +81,13 @@ jobs:
 
     - run: echo "APP_NAME=$(echo ${{ github.repository }} | cut -d'/' -f2)" >> $GITHUB_ENV
     - run: sed -i "s/\[app-name\]/$APP_NAME/g" helm/Chart.yaml
-    - run: if ${{ github.ref_name }} =~ "release-"; then echo "APP_VERSION=$(echo ${{ github.ref_name }}" >> $GITHUB_ENV else echo "APP_VERSION=v0.0.0" >> $GITHUB_ENV fi 
+    - run: 
+    - |
+      if ${{ github.ref_name }} =~ "release-"; then 
+      echo "APP_VERSION=$(echo ${{ github.ref_name }}" >> $GITHUB_ENV 
+      else 
+      echo "APP_VERSION=v0.0.0" >> $GITHUB_ENV 
+      fi 
     - run: sed -i 's/\[app-version\]/$APP_VERSION/g' helm/Chart.yaml
     - run: helm package helm
     - run: echo ${{ secrets.GITHUB_TOKEN }} | helm registry login ${{ env.REGISTRY }}/${{ github.ACTOR }} --username ${{ github.ACTOR }} --password-stdin
