@@ -88,7 +88,7 @@ jobs:
         else
         echo "APP_VERSION=v0.0.0" >> $GITHUB_ENV; 
         fi
-    - run: echo $APP_VERSION
+    - run: sed -i "s/\[image-repository\]/${{ env.REGISTRY }}/${{ GITHUB.REPOSITORY }}/g" helm/Chart.yaml
     - run: sed -i "s/\[app-version\]/${APP_VERSION}/g" helm/Chart.yaml
     - run: helm package helm --version "$APP_VERSION"
     - run: echo ${{ secrets.GITHUB_TOKEN }} | helm registry login ${{ env.REGISTRY }}/${{ GITHUB.REPOSITORY_OWNER }} --username ${{ GITHUB.REPOSITORY_OWNER }} --password-stdin

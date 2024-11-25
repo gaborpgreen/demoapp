@@ -23,7 +23,7 @@ version: "[app-version]"
 # It is recommended to use it with quotes.
 appVersion: "[app-version]"
 
-#image:
-#  repository: ghcr.io/gaborpgreen/demoapp
-#  tag: main
-#  pullPolicy: IfNotPresent
+image:
+  repository: "[image-repository]"
+  tag: "[app-version]"
+  pullPolicy: IfNotPresent
