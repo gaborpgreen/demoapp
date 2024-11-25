@@ -84,7 +84,7 @@ jobs:
     - run: |
         if [[ ${{ GITHUB.REF_NAME }} == "release-"* ]]; 
         then
-        echo "APP_VERSION=$(echo ${GITHUB.REF_NAME#release-})" >> $GITHUB_ENV; 
+        echo "APP_VERSION=$(echo ${{ GITHUB.REF_NAME#release- }})" >> $GITHUB_ENV; 
         else
         echo "APP_VERSION=v0.0.0" >> $GITHUB_ENV; 
         fi
