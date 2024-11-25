@@ -37,7 +37,7 @@ jobs:
       uses: docker/login-action@v3.3.0
       with:
         registry: ${{ env.REGISTRY }}
-        username: ${{ github.ACTOR }}
+        username: ${{ GITHUB_ACTOR }}
         password: ${{ secrets.GITHUB_TOKEN }}
         # username: ${{ secrets.DOCKER_USERNAME }}
         # password: ${{ secrets.DOCKER_PASSWORD }}
@@ -46,7 +46,7 @@ jobs:
       id: meta
       uses: docker/metadata-action@v5.5.1
       with:
-        images: ${{ env.REGISTRY }}/${{ github.REPOSITORY }}
+        images: ${{ env.REGISTRY }}/${{ GITHUB_REPOSITORY }}
 
     - name: Build and push Docker image
       id: push
@@ -61,7 +61,7 @@ jobs:
 #    - name: Generate artifact attestation
 #      uses: actions/attest-build-provenance@v1.4.4
 #      with:
-#        subject-name: ${{ env.REGISTRY }}/${{ github.REPOSITORY }}
+#        subject-name: ${{ env.REGISTRY }}/${{ GITHUB_REPOSITORY }}
 #        subject-digest: ${{ steps.push.outputs.digest }}
 #        push-to-registry: true
 
@@ -69,7 +69,7 @@ jobs:
     name: Push helm chart
     runs-on: ubuntu-latest
     needs: [docker_image]
-#    if: ${{ ! startsWith(github.ref_name, 'release-') }}
+#    if: ${{ ! startsWith(GITHUB_REF_NAME, 'release-') }}
     permissions:
       packages: write
       contents: read
@@ -79,10 +79,10 @@ jobs:
     - name: Check out the repo
       uses: actions/checkout@v4.2.2
 
-    - run: echo "APP_NAME=$(echo ${{ github.repository }} | cut -d'/' -f2)" >> $GITHUB_ENV
+    - run: echo "APP_NAME=$(echo ${{ GITHUB_REPOSITORY }} | cut -d'/' -f2)" >> $GITHUB_ENV
     - run: sed -i "s/\[app-name\]/$APP_NAME/g" helm/Chart.yaml
     - run: |
-        if [[ ${{ github.ref_name }} == "release-"* ]]; 
+        if [[ ${{ GITHUB_REF_NAME }} == "release-"* ]]; 
         then
         echo "APP_VERSION=$(echo ${GITHUB_REF_NAME#release-})" >> $GITHUB_ENV; 
         else
@@ -90,6 +90,6 @@ jobs:
         fi 
     - run: sed -i "s/\[app-version\]/${APP_VERSION}/g" helm/Chart.yaml
     - run: helm package helm --version ${APP_VERSION}
-    - run: echo ${{ secrets.GITHUB_TOKEN }} | helm registry login ${{ env.REGISTRY }}/${{ github.ACTOR }} --username ${{ github.ACTOR }} --password-stdin
+    - run: echo ${{ secrets.GITHUB_TOKEN }} | helm registry login ${{ env.REGISTRY }}/${{ GITHUB_ACTOR }} --username ${{ GITHUB_ACTOR }} --password-stdin
     - run: ls
-    - run: helm push ./"$APP_NAME"-"${APP_VERSION}".tgz oci://${{ env.REGISTRY }}/${{ github.ACTOR }}/helm
+    - run: helm push ./"$APP_NAME"-"${APP_VERSION}".tgz oci://${{ env.REGISTRY }}/${{ GITHUB_ACTOR }}/helm
