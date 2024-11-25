@@ -84,12 +84,12 @@ jobs:
     - run: |
         if [[ ${{ github.ref_name }} == "release-"* ]]; 
         then
-        echo "APP_VERSION=$(echo ${{ github.ref_name }})" >> $GITHUB_ENV; 
+        echo "APP_VERSION=$(echo ${{ github.ref_name#release- }})" >> $GITHUB_ENV; 
         else
         echo "APP_VERSION=v0.0.1" >> $GITHUB_ENV; 
         fi 
-    - run: sed -i "s/\[app-version\]/${APP_VERSION#release-}/g" helm/Chart.yaml
-    - run: helm package helm --version ${APP_VERSION#release-}
+    - run: sed -i "s/\[app-version\]/${APP_VERSION}/g" helm/Chart.yaml
+    - run: helm package helm --version ${APP_VERSION}
     - run: echo ${{ secrets.GITHUB_TOKEN }} | helm registry login ${{ env.REGISTRY }}/${{ github.ACTOR }} --username ${{ github.ACTOR }} --password-stdin
     - run: ls
-    - run: helm push ./"$APP_NAME"-"${APP_VERSION#release-}".tgz oci://${{ env.REGISTRY }}/${{ github.ACTOR }}/helm
+    - run: helm push ./"$APP_NAME"-"${APP_VERSION}".tgz oci://${{ env.REGISTRY }}/${{ github.ACTOR }}/helm
