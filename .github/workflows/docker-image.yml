@@ -46,7 +46,7 @@ jobs:
       id: meta
       uses: docker/metadata-action@v5.5.1
       with:
-        images: ${{ env.REGISTRY }}/${{ GITHUB_REPOSITORY }}
+        images: ${{ env.REGISTRY }}/${{ GITHUB.REPOSITORY }}
 
     - name: Build and push Docker image
       id: push
@@ -61,7 +61,7 @@ jobs:
 #    - name: Generate artifact attestation
 #      uses: actions/attest-build-provenance@v1.4.4
 #      with:
-#        subject-name: ${{ env.REGISTRY }}/${{ GITHUB_REPOSITORY }}
+#        subject-name: ${{ env.REGISTRY }}/${{ GITHUB.REPOSITORY }}
 #        subject-digest: ${{ steps.push.outputs.digest }}
 #        push-to-registry: true
 
@@ -79,7 +79,7 @@ jobs:
     - name: Check out the repo
       uses: actions/checkout@v4.2.2
 
-    - run: echo "APP_NAME=$(echo ${{ GITHUB_REPOSITORY }} | cut -d'/' -f2)" >> $GITHUB_ENV
+    - run: echo "APP_NAME=$(echo ${{ GITHUB.REPOSITORY }} | cut -d'/' -f2)" >> $GITHUB_ENV
     - run: sed -i "s/\[app-name\]/$APP_NAME/g" helm/Chart.yaml
     - run: |
         if [[ ${{ GITHUB_REF_NAME }} == "release-"* ]]; 
