@@ -86,7 +86,7 @@ jobs:
         then
         echo "APP_VERSION=$(echo ${${{ github.ref_name }}#release-})" >> $GITHUB_ENV; 
         else
-        echo "APP_VERSION=v0.0.1" >> $GITHUB_ENV; 
+        echo "APP_VERSION=v0.0.0" >> $GITHUB_ENV; 
         fi 
     - run: sed -i "s/\[app-version\]/${APP_VERSION}/g" helm/Chart.yaml
     - run: helm package helm --version ${APP_VERSION}
